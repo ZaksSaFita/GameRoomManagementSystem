@@ -5,6 +5,7 @@ import {MyAuthService} from '../services/auth-services/my-auth.service';
 export class AuthGuardData {
   isAdmin?: boolean;
   isManager?: boolean;
+  isUser?: boolean;
 }
 
 @Injectable({

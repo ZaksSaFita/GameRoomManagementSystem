@@ -1,28 +1,59 @@
+ï»¿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RS1_2024_25.API.Data;
-using RS1_2024_25.API.Helper.Auth;
-using RS1_2024_25.API.Services;
-
+using RS1_2024_25.API.Helpers;
+using RS1_2024_25.API.Services.SeedData;
+using RS1_2024_25.API.Services.User;
+using System.Text;
 
 var config = new ConfigurationBuilder()
-.AddJsonFile("appsettings.json", false)
-.Build();
+    .AddJsonFile("appsettings.json", false)
+    .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("db1")));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(x => x.OperationFilter<MyAuthorizationSwaggerHeader>());
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor(); // Dodavanje IHttpContextAccessor
 
-//dodajte vaše servise
-builder.Services.AddTransient<MyAuthService>();
+// Add your services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<SeedDataService>();
+
+// JWT LOAD
+var jwtSettings = config.GetSection("JwtSettings").Get<JWTSettings>();
+
+// Logovanje za SecretKey
+Console.WriteLine($"SecretKey from config: {jwtSettings.SecretKey}");
+
+builder.Services.Configure<JWTSettings>(config.GetSection("JwtSettings"));
+
+// JWT Configuration
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 var app = builder.Build();
 
@@ -36,9 +67,9 @@ app.UseCors(
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-); //This needs to set everything allowed
+);
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

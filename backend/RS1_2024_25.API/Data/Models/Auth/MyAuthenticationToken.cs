@@ -1,23 +1,27 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RS1_2024_25.API.Data.Models.Auth;
-
-public class MyAuthenticationToken
+namespace RS1_2024_25.API.Data.Models.Auth
 {
-    [Key]
-    public int ID { get; set; }
+    public class MyAuthenticationToken
+    {
+        [Key]
+        public int Id { get; set; }
 
-    public required string Value { get; set; } // Token string
+        [Required]
+        public string Value { get; set; }
 
-    public string IpAddress { get; set; } = string.Empty;// IP address of the client
+        [Required]
+        public DateTime RecordedAt { get; set; }
 
-    public DateTime RecordedAt { get; set; } // Timestamp of token creation
+        [Required]
+        public DateTime ExpiresAt { get; set; }
 
-    // Foreign key to link the token to a specific user
-    [ForeignKey(nameof(MyAppUser))]
-    public int MyAppUserId { get; set; }
+        [Required]
+        public string IpAddress { get; set; }
 
-    public MyAppUser? MyAppUser { get; set; } // Navigation property to the user
+        [ForeignKey(nameof(User))]
+        public int UserId { get; set; }
+        public User User { get; set; }
+    }
 }

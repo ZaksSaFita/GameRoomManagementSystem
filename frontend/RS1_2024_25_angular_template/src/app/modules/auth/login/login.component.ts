@@ -8,7 +8,7 @@ import {AuthLoginEndpointService, LoginRequest} from '../../../endpoints/auth-en
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginRequest: LoginRequest = {username: 'admin1', password: 'admin123'};
+  loginRequest: LoginRequest = {username: 'zahir', password: '1'};
   errorMessage: string | null = null;
 
   constructor(private authLoginService: AuthLoginEndpointService, private router: Router) {
