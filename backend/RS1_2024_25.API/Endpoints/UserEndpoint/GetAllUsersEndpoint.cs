@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
 
 namespace RS1_2024_25.API.Endpoints.UserEndpoint
 {
+    [Authorize(Roles = "Admin,Employee")]
     [Route("user")]
     [ApiController]
     public class GetAllUsersEndpoint : MyEndpointBaseAsync.WithoutRequest.WithActionResult<GetAllUsersResponse>

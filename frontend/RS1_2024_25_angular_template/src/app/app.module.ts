@@ -1,32 +1,32 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
-import {AppRoutingModule} from './app-routing.module';
+import {FormsModule} from '@angular/forms';
+import {AppRoutingModule} from './app-routing.module'; // Uvoz rute modula
 import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MyAuthInterceptor} from './services/auth-services/my-auth-interceptor.service';
-import {MyAuthService} from './services/auth-services/my-auth.service';
-import {SharedModule} from './modules/shared/shared.module';
+import {AuthGuardService} from './services/auth-services/auth-guard.service';
+import {RoleGuard} from './services/auth-services/role-guard.service';
+import {AuthService} from './services/auth-services/auth.service';
+import {RouterModule} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule, // Modul za forme
     AppRoutingModule,
+    RouterModule,
     HttpClientModule,
-    SharedModule // Omogućava korištenje UnauthorizedComponent u AppRoutingModule
+
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MyAuthInterceptor,
-      multi: true // Ensures multiple interceptors can be used if needed
-    },
-    MyAuthService // Ensure MyAuthService is available for the interceptor
+    AuthService, // Pružanje Auth Service-a
+    AuthGuardService, // Pružanje Auth Guard-a
+    RoleGuard // Pružanje Role Guard-a
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // Bootstrap glavne aplikacije
 })
 export class AppModule {
 }

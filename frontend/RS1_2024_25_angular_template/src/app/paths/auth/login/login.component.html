@@ -1,0 +1,19 @@
+<div class="login-holder">
+  <!-- login.component.html -->
+  <div class="container">
+    <h2>Prijava</h2>
+    <form (ngSubmit)="onSubmit()">
+      <input [(ngModel)]="username" name="username" placeholder="Korisničko ime" required type="text">
+      <input [(ngModel)]="password" name="password" placeholder="Lozinka" required type="password">
+      <button type="submit">Prijavi se</button>
+    </form>
+    <div class="social-login">
+      <img alt="Facebook" src="">
+      <img alt="Google" src="">
+      <img alt="Twitter" src="">
+    </div>
+    <div class="signup"><p>Nemate račun? <a href="#">Registrujte se</a></p></div>
+  </div>
+
+</div>
+

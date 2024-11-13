@@ -48,12 +48,6 @@ public class UserService : IUserService
             return null;
         }
 
-        // Logovanje korisničkih podataka
-        Console.WriteLine($"Authenticated User: {user.UserProfile.Username}");
-        Console.WriteLine($"RoleName: {user.Roles?.RoleName}");
-
-        // Provera vrednosti pre generisanja tokena
-        Console.WriteLine($"SecretKey before calling GenerateJwtToken: {_jwtSettings.SecretKey}");
 
         return GenerateJwtToken(user);
     }
@@ -66,14 +60,7 @@ public class UserService : IUserService
         }
 
         var secretKey = _jwtSettings.SecretKey ?? throw new ArgumentNullException(nameof(_jwtSettings.SecretKey), "SecretKey cannot be null");
-
-        // Logovanje vrednosti pre enkodiranja
-        Console.WriteLine($"SecretKey before encoding: {secretKey}");
-
         var key = Encoding.ASCII.GetBytes(secretKey);
-
-        // Logovanje vrednosti nakon enkodiranja
-        Console.WriteLine($"Encoded SecretKey length: {key.Length}");
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -131,5 +118,18 @@ public class UserService : IUserService
         var newRefreshToken = await GenerateRefreshToken(authToken.User.UserProfile.Username);
 
         return newJwtToken; // Return both tokens if needed
+    }
+    public async Task<string> GetUserRole(string username)
+    {
+        var user = await _context.Users
+            .Include(u => u.Roles)
+            .SingleOrDefaultAsync(u => u.UserProfile.Username == username);
+
+        if (user == null || user.Roles == null)
+        {
+            return null;
+        }
+
+        return user.Roles.RoleName;
     }
 }

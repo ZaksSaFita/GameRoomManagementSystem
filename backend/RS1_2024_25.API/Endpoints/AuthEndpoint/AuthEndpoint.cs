@@ -21,11 +21,13 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 return Unauthorized("Invalid username or password");
 
             var refreshToken = await _userService.GenerateRefreshToken(request.Username);
+            var role = await _userService.GetUserRole(request.Username); // Assuming GetUserRole method exists
 
             return Ok(new AuthResponse
             {
                 Token = token,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                Role = role
             });
         }
 
@@ -34,12 +36,13 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             public string Username { get; set; }
             public string Password { get; set; }
         }
-
         public class AuthResponse
         {
             public string Token { get; set; }
             public string RefreshToken { get; set; }
+            public string Role { get; set; }
         }
+
 
         [HttpPost("refresh")]
         public async Task<ActionResult<AuthResponse>> RefreshTokenAsync([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken = default)
@@ -50,11 +53,13 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 return Unauthorized("Invalid refresh token");
 
             var newRefreshToken = await _userService.GenerateRefreshToken(request.Username);
+            var role = await _userService.GetUserRole(request.Username); // Assuming GetUserRole method exists
 
             return Ok(new AuthResponse
             {
                 Token = newToken,
-                RefreshToken = newRefreshToken
+                RefreshToken = newRefreshToken,
+                Role = role
             });
         }
     }
@@ -65,9 +70,5 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         public string RefreshToken { get; set; }
     }
 
-    public class AuthResponse
-    {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
-    }
+
 }
