@@ -27,7 +27,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             {
                 Token = token,
                 RefreshToken = refreshToken,
-                //Role = role
             });
         }
 
@@ -40,7 +39,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         {
             public string Token { get; set; }
             public string RefreshToken { get; set; }
-            //public string Role { get; set; }
         }
 
 
@@ -59,7 +57,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             {
                 Token = newToken,
                 RefreshToken = newRefreshToken,
-                //Role = role
             });
         }
     }

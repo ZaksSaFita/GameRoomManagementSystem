@@ -119,17 +119,4 @@ public class UserService : IUserService
 
         return newJwtToken; // Return both tokens if needed
     }
-    //public async Task<string> GetUserRole(string username)
-    //{
-    //    var user = await _context.Users
-    //        .Include(u => u.Roles)
-    //        .SingleOrDefaultAsync(u => u.UserProfile.Username == username);
-
-    //    if (user == null || user.Roles == null)
-    //    {
-    //        return null;
-    //    }
-
-    //    return user.Roles.RoleName;
-    //}
 }
