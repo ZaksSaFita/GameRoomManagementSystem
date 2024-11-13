@@ -3,6 +3,7 @@ import {
   GetAllUsersEndpointService,
   GetAllUsersResponse
 } from '../../../endpoints/user-endpoints/get-all-users-endpoint.service';
+import {AuthService} from '../../../services/auth-services/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -10,15 +11,29 @@ import {
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent implements OnInit {
-
+  isCollapsed = true;
   users: GetAllUsersResponse[] = [];
+  loggedUser: any = null;
 
-  constructor(private GetAllUsersService: GetAllUsersEndpointService) {
+  constructor(private GetAllUsersService: GetAllUsersEndpointService, private auth: AuthService) {
   }
 
   ngOnInit() {
-    this.GetAllUsersService.handleAsync().subscribe(data => this.users = data.slice(-5).sort((a, b) => b.userId - a.userId));
+    this.loadUsers();
+    this.getLoggedInUser();
   }
 
+  loadUsers() {
+    this.GetAllUsersService.handleAsync().subscribe(data =>
+      this.users = data.slice(-10).sort((a, b) => b.userId - a.userId));
+  }
 
+  getLoggedInUser() {
+    this.loggedUser = this.auth.getUserInfoFromToken();
+    console.log("userinfo: ", this.loggedUser);
+  }
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

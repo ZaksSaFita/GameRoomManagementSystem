@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {BaseUrl} from '../../helper/BaseUrl';
+import {jwtDecode} from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +16,27 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  login(username: string, password: string): Observable<{ token: string, role: string }> {
-    return this.http.post<{ token: string, role: string }>(BaseUrl.adress + 'auth/login', {username, password})
+  login(username: string, password: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(BaseUrl.adress + 'auth/login', {username, password})
       .pipe(
         tap(response => {
           this.token = response.token;
           localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
-          console.log(response.role, "ovo je role");
-          this.redirectUser(response.role);
+
+          //decode user token
+          const userInfo = this.getUserInfoFromToken();
+          console.log("userRole", userInfo.role);
+
+          this.redirectUser(userInfo.role);
+          if (userInfo) {
+            console.log("userID", userInfo.nameid);
+            console.log("userRole", userInfo.role);
+
+          }
+
+
+          //to fatch by id implement this
+          //this.fetchUserDetails(userInfo.id);
         })
       );
   }
@@ -38,18 +52,30 @@ export class AuthService {
     return this.token !== null || localStorage.getItem('token') !== null;
   }
 
-  getRole(): string | null {
-    return localStorage.getItem('role');
-  }
 
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
+  getUserInfoFromToken(): any {
+    const token = this.getToken();
+    if (token) {
+      try {
+        return jwtDecode(token);
+
+      } catch (error) {
+        console.error('Invalid token:', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
+
   private redirectUser(role: string) {
     {
 
-      if (role === 'Admin') {
+      if (role == 'Admin') {
         this.router.navigate(['/admin']);
       } else if (role === 'Employee') {
         this.router.navigate(['/employee']);
@@ -59,4 +85,6 @@ export class AuthService {
     }
     console.log('Redirecting user with role:', role);
   }
+
+
 }

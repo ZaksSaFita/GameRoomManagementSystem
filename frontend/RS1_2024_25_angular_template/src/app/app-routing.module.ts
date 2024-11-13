@@ -1,24 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RoleGuard} from './services/auth-services/role-guard.service';
+import {AuthGuardService} from './services/auth-services/auth-guard.service';
 
 const routes: Routes = [
 
   {
     path: 'admin',
-    canActivate: [RoleGuard],
+    canActivate: [AuthGuardService],
     data: {expectedRole: 'Admin'},
     loadChildren: () => import('./paths/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
-  },
-  {
-    path: 'employee',
-    canActivate: [RoleGuard],
-    data: {expectedRole: 'Admin, Employee'},
-    loadChildren: () => import('./paths/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
-  },
-  {
-    path: 'user',
-    loadChildren: () => import('./paths/user/user.module').then(m => m.UserModule)  // Lazy load  modula
   },
   {
     path: 'public',

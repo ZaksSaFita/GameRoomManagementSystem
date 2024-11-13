@@ -1,38 +1,32 @@
-:host {
-  display: flex;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  height: 100vh;
-  margin: 0;
-}
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 .sidebar {
-  width: 60px;
-  background: #333;
-  color: #fff;
-  height: 100vh;
-  padding: 20px 10px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  width: 70px;
+  background-color: #333;
+  color: white;
+  padding: 20px;
   position: fixed;
-  transition: width 0.3s, padding 0.3s;
-  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu {
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .sidebar:hover {
   width: 250px;
-  padding: 20px;
-}
-
-.sidebar h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #6a11cb;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.sidebar:hover h2 {
-  opacity: 1;
 }
 
 .sidebar ul {
@@ -41,85 +35,104 @@
 }
 
 .sidebar ul li {
-  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Dodaj razmak između stavki */
+}
+
+.sidebar ul li i {
+  margin-right: 10px;
+  font-size: 18px;
+  flex-shrink: 0; /* Osigurava da se ikona ne smanji */
 }
 
 .sidebar ul li a {
-  color: #fff;
+  color: white;
   text-decoration: none;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease;
 }
 
-.sidebar ul li a:hover {
-  background: #575757;
+.sidebar ul li a p {
+  display: none;
+  margin-left: 10px;
+}
+
+.sidebar:hover ul li a p {
+  display: inline;
 }
 
 .main-content {
-  margin-left: 60px;
+  margin-left: 80px;
   padding: 20px;
-  width: calc(100% - 60px);
-  transition: margin-left 0.3s, width 0.3s;
+  transition: margin-left 0.3s ease;
 }
 
-.sidebar:hover ~ .main-content {
-  margin-left: 250px;
-  width: calc(100% - 250px);
+.sidebar:hover + .main-content {
+  margin-left: 270px;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, auto);
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #ddd;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header .user-info {
+  font-size: 16px;
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 .card {
-  background: #fff;
+  background-color: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
 }
 
-.card.small {
-  grid-column: span 1;
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
 }
 
-.card.large {
-  grid-column: span 2;
-  grid-row: span 2;
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
 }
 
-.card.medium {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.card ul {
-  list-style: none;
-  padding: 0;
-}
-
-.card li {
-  margin: 10px 0;
-  color: #333;
-}
-
-.card button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: white;
-  cursor: pointer;
+table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 10px;
 }
 
-.card button:hover {
-  background: linear-gradient(to right, #2575fc, #6a11cb);
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f9;
 }
 
 @media (max-width: 768px) {
@@ -131,16 +144,33 @@
 
   .main-content {
     margin-left: 0;
+    padding: 10px;
+  }
+
+  .card {
+    min-width: 100%;
+  }
+
+  .sidebar:hover + .main-content {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .table-container {
     width: 100%;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  .card.large,
-  .card.medium {
-    grid-column: span 1;
-    grid-row: span 1;
   }
 }

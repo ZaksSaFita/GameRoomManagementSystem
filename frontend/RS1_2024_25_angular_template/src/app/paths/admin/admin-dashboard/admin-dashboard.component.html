@@ -1,36 +1,113 @@
-<div class="sidebar">
-  <h2>Admin Panel</h2>
+<div (mouseenter)="toggleSidebar()" (mouseleave)="toggleSidebar()" [ngClass]="{'collapsed': isCollapsed}"
+     class="sidebar">
   <ul>
-    <li><a routerLink="/admin/dashboard">Dashboard</a></li>
-    <li><a routerLink="/admin/users">Korisnici</a></li>
-    <li><a routerLink="/admin/settings">Postavke</a></li>
-    <li><a routerLink="/admin/reports">Izvještaji</a></li>
-    <li><a routerLink="/auth/login">Odjava</a></li>
+    <li class="active">
+      <i class="fas fa-user-circle"></i>
+      <a href=""><p *ngIf="!isCollapsed">Profile</p></a>
+    </li>
   </ul>
+
+  <div class="menu">
+    <ul>
+
+      <li class="active">
+        <i class="fas fa-tachometer-alt"></i>
+        <a href=""><p *ngIf="!isCollapsed">Dashboard</p></a>
+      </li>
+      <li>
+        <i class="fas fa-shopping-cart"></i>
+        <a href=""><p *ngIf="!isCollapsed">E-commerce</p></a>
+      </li>
+      <li>
+        <i class="fas fa-user"></i>
+        <a href="#"><p *ngIf="!isCollapsed">User</p></a>
+      </li>
+      <li>
+        <i class="fas fa-book"></i>
+        <a href=""><p *ngIf="!isCollapsed">Documentation</p></a>
+      </li>
+      <li><a href=""><i class="fas fa-layer-group"></i>
+        <p *ngIf="!isCollapsed">Core</p></a></li>
+      <li><a href="#"><i class="fas fa-table"></i>
+        <p *ngIf="!isCollapsed">Tables</p></a></li>
+      <li><a href="#"><i class="fas fa-cubes"></i>
+        <p *ngIf="!isCollapsed">UI Elements</p></a></li>
+      <li><a href="#"><i class="fas fa-chart-pie"></i>
+        <p *ngIf="!isCollapsed">Charts</p></a></li>
+      <li><a href="#"><i class="fas fa-map"></i>
+        <p *ngIf="!isCollapsed">Maps</p></a></li>
+      <li><a href="#"><i class="fas fa-plus-circle"></i>
+        <p *ngIf="!isCollapsed">Extra</p></a></li>
+      <li><a href="#"><i class="fas fa-bars"></i>
+        <p *ngIf="!isCollapsed">Menu Levels</p></a></li>
+    </ul>
+  </div>
+  <div class="help">
+    <ul>
+      <li><a href="#"><i class="fas fa-book"></i>
+        <p *ngIf="!isCollapsed">Library</p></a></li>
+      <li><a href="#"><i class="fas fa-life-ring"></i>
+        <p *ngIf="!isCollapsed">Support</p></a></li>
+    </ul>
+  </div>
+
 </div>
 <div class="main-content">
-  <section class="cards">
-    <div class="card small" id="1">
-
+  <header>
+    <h1>Angular Material Admin</h1>
+    <div class="user-info">
+      <p>Hi, {{ loggedUser.unique_name }}</p>
     </div>
-    <div class="card small">
-      <h3>Aktivnosti</h3>
-      <p>Prikaz nedavnih aktivnosti ovdje.</p>
+  </header>
+  <div class="dashboard">
+    <div class="card">
+      <h2>Light Blue</h2>
+      <p>199 <span>-3.7%</span></p>
+      <p>33 Registrations <span>3.25% Bounce Rate</span></p>
+      <p>330 Views</p>
     </div>
-    <div class="card small">
-      <h3>Poruke</h3>
-      <p>Prikaz novih poruka ovdje.</p>
+    <div class="card">
+      <h2>Sing App</h2>
+      <p>121 <span>-3.2%</span></p>
+      <p>15 Registrations <span>3.01% Bounce Rate</span></p>
+      <p>302 Views</p>
     </div>
-    <div class="card large">
-      <h3>Zadnjih 5 korisnika</h3>
-      <ul>
-        <li *ngFor="let user of users">{{ user.username }} - {{ user.email }}</li>
-      </ul>
-      <button>Vidi sve korisnike</button>
+    <div class="card">
+      <h2>RNS</h2>
+      <p>175 <span>-3.1%</span></p>
+      <p>31 Registrations <span>3.23% Bounce Rate</span></p>
+      <p>301 Views</p>
     </div>
-    <div class="card medium">
-      <h3>Srednja kartica</h3>
-      <p>Sadržaj srednje kartice ovdje.</p>
-    </div>
-  </section>
+  </div>
+  <div class="support-requests">
+    <h2>Latest Users</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>USER ID</th>
+        <th>USERNAME</th>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>EMAIL</th>
+        <th>PHONE</th>
+        <th>COUNTRY</th>
+        <th>CITY</th>
+        <th>ROLE</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.userId }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.countryName }}</td>
+        <td>{{ user.cityName }}</td>
+        <td>{{ user.roleName }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
