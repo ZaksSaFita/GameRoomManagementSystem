@@ -1,0 +1,36 @@
+<div class="sidebar">
+  <h2>Admin Panel</h2>
+  <ul>
+    <li><a routerLink="/admin/dashboard">Dashboard</a></li>
+    <li><a routerLink="/admin/users">Korisnici</a></li>
+    <li><a routerLink="/admin/settings">Postavke</a></li>
+    <li><a routerLink="/admin/reports">Izvještaji</a></li>
+    <li><a routerLink="/auth/login">Odjava</a></li>
+  </ul>
+</div>
+<div class="main-content">
+  <section class="cards">
+    <div class="card small" id="1">
+
+    </div>
+    <div class="card small">
+      <h3>Aktivnosti</h3>
+      <p>Prikaz nedavnih aktivnosti ovdje.</p>
+    </div>
+    <div class="card small">
+      <h3>Poruke</h3>
+      <p>Prikaz novih poruka ovdje.</p>
+    </div>
+    <div class="card large">
+      <h3>Zadnjih 5 korisnika</h3>
+      <ul>
+        <li *ngFor="let user of users">{{ user.username }} - {{ user.email }}</li>
+      </ul>
+      <button>Vidi sve korisnike</button>
+    </div>
+    <div class="card medium">
+      <h3>Srednja kartica</h3>
+      <p>Sadržaj srednje kartice ovdje.</p>
+    </div>
+  </section>
+</div>

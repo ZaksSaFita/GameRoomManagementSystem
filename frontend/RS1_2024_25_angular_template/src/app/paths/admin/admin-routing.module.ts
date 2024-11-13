@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminLayoutComponent} from './admin-layout/admin-layout.component';
-import {AdminHomeComponent} from './admin-home/admin-home.component';
+import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
     path: '', component: AdminLayoutComponent, children: [
-      {path: '', redirectTo: 'admin-home', pathMatch: 'full'},
-      {path: 'admin-home', component: AdminHomeComponent},
-      {path: '**', component: AdminHomeComponent}
+      {path: '', redirectTo: 'admin-dashboard', pathMatch: 'full'},
+      {path: 'admin-dashboard', component: AdminDashboardComponent},
+      {path: '**', component: AdminDashboardComponent}
     ]
 
   }
