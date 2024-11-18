@@ -1,0 +1,18 @@
+<div class="device-list">
+  <h1>Available Devices</h1>
+
+  <label for="userSelect">Select User:</label>
+  <select [(ngModel)]="selectedUserId" id="userSelect">
+    <option *ngFor="let user of users" [value]="user.userId">{{ user.username }}</option>
+  </select>
+
+  <ul>
+    <li *ngFor="let device of devices">
+      <h2>{{ device.deviceType }}</h2>
+      <p>Status: {{ device.isAvailable ? 'Available' : 'In Use' }}</p>
+      <button (click)="startSession(device)" *ngIf="device.isAvailable">
+        Start Session
+      </button>
+    </li>
+  </ul>
+</div>

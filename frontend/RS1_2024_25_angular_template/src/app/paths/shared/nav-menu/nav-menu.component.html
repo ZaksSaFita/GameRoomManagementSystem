@@ -1,0 +1,45 @@
+<div (mouseenter)="toggleSidebar()" (mouseleave)="toggleSidebar()" class="sidebar">
+
+  <div class="user-profile">
+    <ul>
+      <li>
+        <i class="fas fa-user-circle"></i>
+        <a href=""><p *ngIf="!isCollapsed">Profile</p></a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="menu">
+    <ul>
+      <li><a routerLink="admin-dashboard"><i class="fas fa-dashboard"></i>
+        <p *ngIf="!isCollapsed">Dashboard</p></a></li>
+
+      <li *ngIf="authService.getUserInfoFromToken().role==='Admin'"><a routerLink="user-list"><i
+        class="fas fa-user"></i>
+        <p *ngIf="!isCollapsed">User Management</p></a></li>
+
+      <li *ngIf="authService.getUserInfoFromToken().role==='Employee'"><a routerLink="game-session"><i
+        class="fas fa-gamepad"></i>
+        <p *ngIf="!isCollapsed">Game session</p></a></li>
+
+      <li><a routerLink="device-list"><i class="fas fa-gamepad"></i>
+        <p *ngIf="!isCollapsed">Device Management</p></a></li>
+
+      <li><a routerLink="shop-list"><i class="fas fa-shopping-cart"></i>
+        <p *ngIf="!isCollapsed">Shop Management</p></a></li>
+
+      <li><a routerLink="event-list"><i class="fas fa-calendar-alt"></i>
+        <p *ngIf="!isCollapsed">Event Management</p></a></li>
+    </ul>
+  </div>
+
+  <div class="login-logout">
+    <ul>
+      <li *ngIf="!authService.isAuthenticated()"><a routerLink="/auth/login"><i class="fas fa-sign-in"></i>
+        <p *ngIf="!isCollapsed">Login</p></a></li>
+      <li *ngIf="authService.isAuthenticated()"><a routerLink="/public"><i class="fas fa-sign-out"></i>
+        <p *ngIf="!isCollapsed">Logout</p></a></li>
+    </ul>
+  </div>
+
+</div>

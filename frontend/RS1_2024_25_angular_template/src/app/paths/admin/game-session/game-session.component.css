@@ -1,0 +1,49 @@
+.device-list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.device-list h1 {
+  text-align: center;
+  color: #333;
+}
+
+.device-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.device-list li {
+  background: #f9f9f9;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.device-list li h2 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.device-list li p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.device-list button {
+  padding: 10px 15px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.device-list button:hover {
+  background-color: #218838;
+}

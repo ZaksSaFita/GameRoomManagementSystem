@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  GetAllUsersEndpointService,
-  GetAllUsersResponse
-} from '../../../endpoints/user-endpoints/get-all-users-endpoint.service';
+import {GetAllUsersEndpointService,} from '../../../endpoints/user-endpoints/get-all-users-endpoint.service';
 import {AuthService} from '../../../services/auth-services/auth.service';
+import {GetAllUsersResponse} from '../../../view-models/userVM';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -30,7 +28,6 @@ export class AdminDashboardComponent implements OnInit {
 
   getLoggedInUser() {
     this.loggedUser = this.auth.getUserInfoFromToken();
-    console.log("userinfo: ", this.loggedUser);
   }
 
   toggleSidebar() {

@@ -43,6 +43,8 @@ namespace RS1_2024_25.API.Data
 
 
 
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<GameSession> GameSessions { get; set; }
 
 
 

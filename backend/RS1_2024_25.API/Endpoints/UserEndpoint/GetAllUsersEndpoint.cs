@@ -16,6 +16,7 @@ namespace RS1_2024_25.API.Endpoints.UserEndpoint
             _context = context;
         }
 
+
         [HttpGet("getAll")]
         public override async Task<ActionResult<GetAllUsersResponse>> HandleAsync(CancellationToken cancellationToken = default)
         {

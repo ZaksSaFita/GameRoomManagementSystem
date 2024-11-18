@@ -1,0 +1,17 @@
+.layout-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.leftSide {
+  height: 100%;
+
+}
+
+.rightSide {
+  height: 100%;
+  width: 100%;
+
+}
+

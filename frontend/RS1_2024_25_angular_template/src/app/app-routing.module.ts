@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuardService],
-    data: {expectedRole: 'Admin'},
+    data: {expectedRole: 'Admin, Employee'},
     loadChildren: () => import('./paths/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
   },
   {

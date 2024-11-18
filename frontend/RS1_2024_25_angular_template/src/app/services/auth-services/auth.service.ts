@@ -62,7 +62,6 @@ export class AuthService {
     if (token) {
       try {
         return jwtDecode(token);
-
       } catch (error) {
         console.error('Invalid token:', error);
         return null;
@@ -78,9 +77,9 @@ export class AuthService {
       if (role == 'Admin') {
         this.router.navigate(['/admin']);
       } else if (role === 'Employee') {
-        this.router.navigate(['/employee']);
+        this.router.navigate(['/admin']);
       } else if (role === 'User') {
-        this.router.navigate(['/user']);
+        this.router.navigate(['/public']);
       }
     }
     console.log('Redirecting user with role:', role);

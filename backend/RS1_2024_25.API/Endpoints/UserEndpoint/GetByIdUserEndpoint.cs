@@ -6,15 +6,15 @@ using RS1_2024_25.API.Helper.Api;
 
 [Route("user")]
 [ApiController]
-public class GetUserById :
+public class GetUserById(ApplicationDbContext _context) :
     MyEndpointBaseAsync.WithRequest<GetUserByIdRequest>.WithActionResult<GetUserByIdResponse>
 {
-    private readonly ApplicationDbContext _context;
+    //private readonly ApplicationDbContext _context;
 
-    public GetUserById(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    //public GetUserById(ApplicationDbContext context)
+    //{
+    //    _context = context;
+    //}
 
     [HttpGet("byId")]
     public override async Task<ActionResult<GetUserByIdResponse>> HandleAsync(

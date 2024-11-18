@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117090403_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,14 +160,12 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<int?>("MaxPlayTime")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("DeviceId");
 
-                    b.HasIndex("CurrentUserId");
-
-                    b.ToTable("Devices");
+                    b.ToTable("Device");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.GameSession", b =>
@@ -175,16 +176,13 @@ namespace RS1_2024_25.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GameSessionId"));
 
-                    b.Property<int>("ActualPlayTime")
-                        .HasColumnType("int");
-
                     b.Property<int>("DeviceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime>("StartTine")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -606,16 +604,6 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.Device", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.User", "CurrentUser")
-                        .WithMany()
-                        .HasForeignKey("CurrentUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("CurrentUser");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.GameSession", b =>
